@@ -38,3 +38,37 @@ operation soma(A,B,C){
  4: do dec C goto 2
  }
 //---------------------------
+
+//---A:=A%B && F:=A/B--------
+operation div(A, B, C, D, F){
+//B = divisor, A = dividendo, C e D = aux
+    1: do zera(F) goto 2
+    2: if menor_igual_que(B, A, C, D, E) then goto 3 else goto 0
+    3: do inc F goto 4
+    4: do subtracao(A, B, C) goto 2
+}
+//---------------------------
+
+test menor_igual_que(A, B, C, D, E){
+//testa se A é menor que B sem perda dos valores
+    1: do recebe(C, B, E) goto 2 //C:=A usando E
+    2: do recebe(D, A, E) goto 3 //D:=B usando E
+    3: if zero C then goto 4 else goto 5
+    4: if zero D then goto true else goto false
+    5: do dec D goto 6
+    6: do dec C goto 3
+}
+//---------------------------
+
+//---A:=A-B usando C---------
+operation subtracao(A, B, C){
+1a: do zera(C) goto 1
+    1: if zero B then goto 5 else goto 2
+    2: do dec B goto 3
+    3: do dec A goto 4
+    4: do inc C goto 1
+    5: if zero C then goto 0 else goto 6
+    6: do dec C goto 7
+    7: do inc B goto 5
+}
+//---------------------------
